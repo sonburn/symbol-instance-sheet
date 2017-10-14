@@ -1,4 +1,4 @@
-![Symbol Instance Sheet](https://raw.githubusercontent.com/sonburn/symbol-instance-locator/master/logo.png)
+![Symbol Instance Sheet](https://raw.githubusercontent.com/sonburn/symbol-instance-sheet/master/logo.png)
 
 Generate a sheet of symbol instances from your current document or a library.
 
@@ -39,7 +39,7 @@ To find your plugins directory...
 
 # Changelog
 
-* **0.1** - Initial plugin to generate a sheet of symbol instances from your current document or a library.
+* **0.1** - Initial commit.
 
 # Contact
 
