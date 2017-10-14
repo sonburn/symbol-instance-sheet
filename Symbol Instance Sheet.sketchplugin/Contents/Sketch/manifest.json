@@ -1,0 +1,26 @@
+{
+	"author" : "Jason Burns",
+	"commands" : [
+		{
+			"name" : "Symbol Instance Sheet",
+			"shortcut" : "cmd option shift i",
+			"identifier" : "instanceSheet",
+			"description" : "Generate a sheet of symbol instances from your current document or a library.",
+			"script" : "script.cocoascript",
+			"icon" : "icon-sr.png"
+		}
+	],
+	"menu" : {
+		"title" : "Symbol Instance Sheet",
+		"items" : [
+			"instanceSheet"
+		],
+		"isRoot" : true
+	},
+	"identifier" : "com.sonburn.sketchplugins.symbol-instance-sheet",
+	"version" : "0.1",
+	"description" : "Generate a sheet of symbol instances from your current document or a library.",
+	"authorEmail" : "jason.burns@synchronoss.com",
+	"name" : "Symbol Instance Sheet",
+	"appcast" : "https://raw.githubusercontent.com/sonburn/symbol-instance-sheet/master/appcast.xml"
+}

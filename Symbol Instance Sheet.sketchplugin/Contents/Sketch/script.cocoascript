@@ -1,0 +1,111 @@
+var strPluginName = "Symbol Instance Sheet";
+var strPluginDomain = "com.sonburn.sketchplugins.symbol-instance-sheet";
+
+var onRun = function(context) {
+	var libraries = AppController.sharedInstance().librariesController().libraries(),
+		libraryLoop = libraries.objectEnumerator(),
+		library,
+		libraryArray = ["Current Document"];
+
+	while (library = libraryLoop.nextObject()) {
+		libraryArray.push(library.name());
+	}
+
+	var alertWindow = COSAlertWindow.new();
+
+	alertWindow.setIcon(NSImage.alloc().initByReferencingFile(context.plugin.urlForResourceNamed("icon.png").path()));
+	alertWindow.setMessageText(strPluginName);
+
+	alertWindow.setInformativeText("Generate a sheet of symbol instances from your current document or a library.");
+
+	alertWindow.addTextLabelWithValue("Select a symbol source...");
+
+	var symbolSource = createSelect(libraryArray,0,NSMakeRect(0,0,300,28));
+	alertWindow.addAccessoryView(symbolSource);
+
+	alertWindow.addAccessoryView(createDescription("Note: If a symbol instance sheet already exists for the selected source, it will be replaced by a new sheet with the latest symbols from the source.",11,NSMakeRect(0,0,300,42)));
+
+	alertWindow.addButtonWithTitle("Generate");
+	alertWindow.addButtonWithTitle("Close");
+
+	var responseCode = alertWindow.runModal();
+
+	if (responseCode == 1000) {
+		if (symbolSource.indexOfSelectedItem() == 0) {
+			var librarySymbols = context.document.documentData().localSymbols(),
+				libraryID = context.document.documentData().objectID();
+		} else {
+			var libraries = AppController.sharedInstance().librariesController().libraries(),
+				library = libraries[symbolSource.indexOfSelectedItem()-1],
+				libraryPath = library.locationOnDisk().path(),
+				libraryFile = openFile(libraryPath),
+				librarySymbols = (libraryFile) ? libraryFile.documentData().allSymbols() : nil;
+				libraryID = libraryFile.documentData().objectID();
+
+				libraryFile.close();
+		}
+
+		if (librarySymbols && librarySymbols.length) {
+			var predicate = NSPredicate.predicateWithFormat("userInfo != nil && function(userInfo,'valueForKeyPath:',%@).source == '" + libraryID + "'",strPluginDomain),
+				page = context.document.documentData().pages().filteredArrayUsingPredicate(predicate).firstObject(),
+				pageName = (!library) ? "Current Document" : library.name();
+
+			context.document.removePage(page);
+
+			page = context.document.addBlankPage();
+			page.setName(strPluginName + " [" + pageName + "]");
+			page.setRulerBase(CGPointMake(0,0));
+
+			context.command.setValue_forKey_onLayer(libraryID,"source",page);
+
+			for (var i = 0; i < librarySymbols.length; i++) {
+				var symbol = context.document.localSymbolForSymbol_inLibrary(librarySymbols[i],library);
+					symbolInstance = symbol.newSymbolInstance();
+
+				symbolInstance.frame().setX(symbol.frame().x());
+				symbolInstance.frame().setY(symbol.frame().y());
+
+				page.insertLayer_atIndex(symbolInstance,nil);
+			}
+
+			context.document.currentView().zoomToFitRect(page.contentBounds());
+		} else {
+			displayDialog("There are no symbols in the selected library.",strPluginName)
+		}
+	} else return false;
+}
+
+function displayDialog(message,title) {
+	NSApplication.sharedApplication().displayDialog_withTitle(message,title);
+}
+
+function createSelect(items,selectedItemIndex,frame) {
+	var comboBox = NSComboBox.alloc().initWithFrame(frame),
+		selectedItemIndex = (selectedItemIndex > -1) ? selectedItemIndex : 0;
+
+	comboBox.addItemsWithObjectValues(items);
+	comboBox.selectItemAtIndex(selectedItemIndex);
+
+	return comboBox;
+}
+
+function openFile(path) {
+	var file = MSDocument.new();
+
+	return (file.readFromURL_ofType_error(path,'com.bohemiancoding.sketch.drawing',nil)) ? file : nil;
+}
+
+function createDescription(text,size,frame,alpha) {
+	var label = NSTextField.alloc().initWithFrame(frame),
+		alpha = (alpha) ? alpha : 0.6;
+
+	label.setStringValue(text);
+	label.setFont(NSFont.systemFontOfSize(size));
+	label.setTextColor(NSColor.colorWithCalibratedRed_green_blue_alpha(0/255,0/255,0/255,alpha));
+	label.setBezeled(false);
+	label.setDrawsBackground(false);
+	label.setEditable(false);
+	label.setSelectable(false);
+
+	return label;
+}
