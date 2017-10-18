@@ -18,7 +18,7 @@ Generate a sheet of symbol instances from your current document or a library.
 
 # Usage
 
-* cmd option shift i - Generate a sheet of symbol instances from your current document or a library.
+* cmd option shift i - Generate a sheet of symbol instances from your current document or a library
 
 # Installation
 
