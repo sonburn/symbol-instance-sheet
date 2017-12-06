@@ -68,7 +68,7 @@ var onRun = function(context) {
 				page.insertLayer_atIndex(symbolInstance,nil);
 			}
 
-			context.document.currentView().zoomToFitRect(page.contentBounds());
+			context.document.contentDrawView().zoomToFitRect(page.contentBounds());
 		} else {
 			displayDialog("There are no symbols in the selected library.",strPluginName)
 		}

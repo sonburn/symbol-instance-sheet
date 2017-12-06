@@ -39,6 +39,8 @@ To find your plugins directory...
 
 # Changelog
 
+* **0.3** - Fix for Sketch 48 change of currentView to contentDrawView.
+* **0.2** - Renamed Close button to Cancel.
 * **0.1** - Initial commit.
 
 # Contact
