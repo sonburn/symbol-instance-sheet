@@ -8,7 +8,7 @@ Generate a sheet of symbol instances from your current document or a library.
 	<img width="160" height="41" src="http://bit.ly/RunnerBadgeBlue" alt="runner-badge-blue">
 </a>
 
-<a href="https://sketchpacks.com/sonburn/symbol-instance-locator/install">
+<a href="https://sketchpacks.com/sonburn/symbol-instance-sheet/install">
 	<img width="160" height="41" src="http://sketchpacks-com.s3.amazonaws.com/assets/badges/sketchpacks-badge-install.png" >
 </a>
 
@@ -53,4 +53,4 @@ If you find this plugin helpful, consider shouting me ☕️ via <a href="https:
 
 # License
 
-Copyright (c) 2017 Jason Burns (Sonburn). See LICENSE.md for further details.
+Copyright (c) 2018 Jason Burns (Sonburn). See LICENSE.md for further details.
