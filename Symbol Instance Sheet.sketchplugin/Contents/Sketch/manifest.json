@@ -7,20 +7,36 @@
 			"identifier" : "instanceSheet",
 			"description" : "Generate a sheet of symbol instances from your current document or a library.",
 			"script" : "script.cocoascript",
-			"icon" : "icon-sr.png"
+			"icon" : "icon-sr.png",
+			"handler" : "instanceSheet"
+		},
+		{
+			"name": "Report Issue",
+			"identifier": "report",
+			"script" : "script.cocoascript",
+			"handler": "report"
+		},
+		{
+			"name": "Donate",
+			"identifier": "donate",
+			"script" : "script.cocoascript",
+			"handler": "donate"
 		}
 	],
 	"menu" : {
 		"title" : "Symbol Instance Sheet",
 		"items" : [
-			"instanceSheet"
-		],
-		"isRoot" : true
+			"instanceSheet",
+			"-",
+			"report",
+			"donate"
+		]
 	},
 	"identifier" : "com.sonburn.sketchplugins.symbol-instance-sheet",
-	"version" : "0.3",
+	"version" : "0.4",
 	"description" : "Generate a sheet of symbol instances from your current document or a library.",
 	"authorEmail" : "jason.burns@synchronoss.com",
 	"name" : "Symbol Instance Sheet",
+	"icon" : "icon.png",
 	"appcast" : "https://raw.githubusercontent.com/sonburn/symbol-instance-sheet/master/appcast.xml"
 }

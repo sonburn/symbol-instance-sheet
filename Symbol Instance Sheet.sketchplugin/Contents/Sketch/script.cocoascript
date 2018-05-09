@@ -1,7 +1,8 @@
-var strPluginName = "Symbol Instance Sheet";
-var strPluginDomain = "com.sonburn.sketchplugins.symbol-instance-sheet";
+var strPluginName = "Symbol Instance Sheet",
+	strPluginDomain = "com.sonburn.sketchplugins.symbol-instance-sheet",
+	debugMode = false;
 
-var onRun = function(context) {
+var instanceSheet = function(context) {
 	var libraries = AppController.sharedInstance().librariesController().libraries(),
 		libraryLoop = libraries.objectEnumerator(),
 		library,
@@ -69,30 +70,24 @@ var onRun = function(context) {
 			}
 
 			context.document.contentDrawView().zoomToFitRect(page.contentBounds());
+
+			if (!debugMode) googleAnalytics(context,"sheet","run");
 		} else {
 			displayDialog("There are no symbols in the selected library.",strPluginName)
 		}
 	} else return false;
 }
 
-function displayDialog(message,title) {
-	NSApplication.sharedApplication().displayDialog_withTitle(message,title);
+var report = function(context) {
+	openUrl("https://github.com/sonburn/symbol-instance-sheet/issues/new");
+
+	if (!debugMode) googleAnalytics(context,"report","report");
 }
 
-function createSelect(items,selectedItemIndex,frame) {
-	var comboBox = NSComboBox.alloc().initWithFrame(frame),
-		selectedItemIndex = (selectedItemIndex > -1) ? selectedItemIndex : 0;
+var donate = function(context) {
+	openUrl("https://www.paypal.me/sonburn");
 
-	comboBox.addItemsWithObjectValues(items);
-	comboBox.selectItemAtIndex(selectedItemIndex);
-
-	return comboBox;
-}
-
-function openFile(path) {
-	var file = MSDocument.new();
-
-	return (file.readFromURL_ofType_error(path,'com.bohemiancoding.sketch.drawing',nil)) ? file : nil;
+	if (!debugMode) googleAnalytics(context,"donate","donate");
 }
 
 function createDescription(text,size,frame,alpha) {
@@ -108,4 +103,72 @@ function createDescription(text,size,frame,alpha) {
 	label.setSelectable(false);
 
 	return label;
+}
+
+function createSelect(items,selectedItemIndex,frame) {
+	var comboBox = NSComboBox.alloc().initWithFrame(frame),
+		selectedItemIndex = (selectedItemIndex > -1) ? selectedItemIndex : 0;
+
+	comboBox.addItemsWithObjectValues(items);
+	comboBox.selectItemAtIndex(selectedItemIndex);
+
+	return comboBox;
+}
+
+function displayDialog(message,title) {
+	NSApplication.sharedApplication().displayDialog_withTitle(message,title);
+}
+
+function googleAnalytics(context,category,action,label,value) {
+	var trackingID = "UA-118978647-1",
+		uuidKey = "google.analytics.uuid",
+		uuid = NSUserDefaults.standardUserDefaults().objectForKey(uuidKey);
+
+	if (!uuid) {
+		uuid = NSUUID.UUID().UUIDString();
+		NSUserDefaults.standardUserDefaults().setObject_forKey(uuid,uuidKey);
+	}
+
+	var url = "https://www.google-analytics.com/collect?v=1";
+	// Tracking ID
+	url += "&tid=" + trackingID;
+	// Source
+	url += "&ds=sketch" + MSApplicationMetadata.metadata().appVersion;
+	// Client ID
+	url += "&cid=" + uuid;
+	// pageview, screenview, event, transaction, item, social, exception, timing
+	url += "&t=event";
+	// App Name
+	url += "&an=" + encodeURI(context.plugin.name());
+	// App ID
+	url += "&aid=" + context.plugin.identifier();
+	// App Version
+	url += "&av=" + context.plugin.version();
+	// Event category
+	url += "&ec=" + encodeURI(category);
+	// Event action
+	url += "&ea=" + encodeURI(action);
+	// Event label
+	if (label) {
+		url += "&el=" + encodeURI(label);
+	}
+	// Event value
+	if (value) {
+		url += "&ev=" + encodeURI(value);
+	}
+
+	var session = NSURLSession.sharedSession(),
+		task = session.dataTaskWithURL(NSURL.URLWithString(NSString.stringWithString(url)));
+
+	task.resume();
+}
+
+function openFile(path) {
+	var file = MSDocument.new();
+
+	return (file.readFromURL_ofType_error(path,'com.bohemiancoding.sketch.drawing',nil)) ? file : nil;
+}
+
+function openUrl(url) {
+	NSWorkspace.sharedWorkspace().openURL(NSURL.URLWithString(url));
 }
