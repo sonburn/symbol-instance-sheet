@@ -60,11 +60,14 @@ var instanceSheet = function(context) {
 			context.command.setValue_forKey_onLayer(libraryID,"source",page);
 
 			for (var i = 0; i < librarySymbols.length; i++) {
-				var symbol = context.document.localSymbolForSymbol_inLibrary(librarySymbols[i],library);
-					symbolInstance = symbol.newSymbolInstance();
+				var symbol = MSForeignSymbol.foreignSymbolWithMaster_inLibrary(librarySymbols[i],library);
 
-				symbolInstance.frame().setX(symbol.frame().x());
-				symbolInstance.frame().setY(symbol.frame().y());
+				context.document.documentData().addForeignSymbol(symbol);
+
+				symbolInstance = symbol.symbolMaster().newSymbolInstance();
+
+				symbolInstance.frame().setX(symbol.symbolMaster().frame().x());
+				symbolInstance.frame().setY(symbol.symbolMaster().frame().y());
 
 				page.insertLayer_atIndex(symbolInstance,nil);
 			}

@@ -6,15 +6,15 @@
 		<description>Generate a sheet of symbol instances from your current document or a library.</description>
 		<language>en</language>
 		<item>
-			<title>Version 0.4</title>
+			<title>Version 0.5</title>
 			<description>
 				<![CDATA[
 				<ul>
-				<li>Added plugin icon to manifest for Sketch 50.</li>
+				<li>Fix for localSymbolForSymbol_inLibrary being deprecated in Sketch 50.</li>
 				</ul>
 				]]>
 			</description>
-			<enclosure url="https://github.com/sonburn/symbol-instance-sheet/archive/master.zip" sparkle:version="0.4" />
+			<enclosure url="https://github.com/sonburn/symbol-instance-sheet/archive/master.zip" sparkle:version="0.5" />
 		</item>
 	</channel>
 </rss>
