@@ -60,9 +60,7 @@ var instanceSheet = function(context) {
 			context.command.setValue_forKey_onLayer(libraryID,"source",page);
 
 			for (var i = 0; i < librarySymbols.length; i++) {
-				var symbol = MSForeignSymbol.foreignSymbolWithMaster_inLibrary(librarySymbols[i],library);
-
-				context.document.documentData().addForeignSymbol(symbol);
+				var symbol = importForeignSymbol(librarySymbols[i],library);
 
 				symbolInstance = symbol.symbolMaster().newSymbolInstance();
 
@@ -85,6 +83,12 @@ var report = function(context) {
 	openUrl("https://github.com/sonburn/symbol-instance-sheet/issues/new");
 
 	if (!debugMode) googleAnalytics(context,"report","report");
+}
+
+var plugins = function(context) {
+	openUrl("https://sonburn.github.io/");
+
+	if (!debugMode) googleAnalytics(context,"plugins","plugins");
 }
 
 var donate = function(context) {
@@ -164,6 +168,22 @@ function googleAnalytics(context,category,action,label,value) {
 		task = session.dataTaskWithURL(NSURL.URLWithString(NSString.stringWithString(url)));
 
 	task.resume();
+}
+
+function importForeignSymbol(symbol,library) {
+	var intoDocument = MSDocument.currentDocument().documentData(),
+		libraryController = AppController.sharedInstance().librariesController(),
+		foreignSymbol;
+
+	if (MSApplicationMetadata.metadata().appVersion >= 50) {
+		var objectReference = MSShareableObjectReference.referenceForShareableObject_inLibrary(symbol,library);
+
+		foreignSymbol = libraryController.importShareableObjectReference_intoDocument(objectReference,intoDocument);
+	} else {
+		foreignSymbol = libraryController.importForeignSymbol_fromLibrary_intoDocument_(symbol,library,intoDocument);
+	}
+
+	return foreignSymbol;
 }
 
 function openFile(path) {

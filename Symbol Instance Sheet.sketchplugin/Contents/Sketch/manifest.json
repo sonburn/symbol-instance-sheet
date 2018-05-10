@@ -17,6 +17,12 @@
 			"handler": "report"
 		},
 		{
+			"name": "Other Plugins",
+			"identifier": "plugins",
+			"script" : "script.cocoascript",
+			"handler": "plugins"
+		},
+		{
 			"name": "Donate",
 			"identifier": "donate",
 			"script" : "script.cocoascript",
@@ -29,11 +35,12 @@
 			"instanceSheet",
 			"-",
 			"report",
+			"plugins",
 			"donate"
 		]
 	},
 	"identifier" : "com.sonburn.sketchplugins.symbol-instance-sheet",
-	"version" : "0.5",
+	"version" : "0.6",
 	"description" : "Generate a sheet of symbol instances from your current document or a library.",
 	"authorEmail" : "jason.burns@synchronoss.com",
 	"name" : "Symbol Instance Sheet",
