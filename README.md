@@ -39,6 +39,7 @@ To find your plugins directory...
 
 # Changelog
 
+* **0.7** - Library list is now sorted alphabetically.
 * **0.6** - Utilizing MSShareableObjectReference for importing in Sketch 50, reinstated old method for previous versions of Sketch.
 * **0.5** - Fix for localSymbolForSymbol_inLibrary being deprecated in Sketch 50.
 * **0.4** - Added plugin icon to manifest for Sketch 50.

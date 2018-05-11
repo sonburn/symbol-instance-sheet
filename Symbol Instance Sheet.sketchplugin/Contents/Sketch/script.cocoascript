@@ -2,9 +2,11 @@ var strPluginName = "Symbol Instance Sheet",
 	strPluginDomain = "com.sonburn.sketchplugins.symbol-instance-sheet",
 	debugMode = false;
 
+var librarySort = NSSortDescriptor.sortDescriptorWithKey_ascending("name",1),
+	libraries = AppController.sharedInstance().librariesController().libraries().sortedArrayUsingDescriptors([librarySort]);
+
 var instanceSheet = function(context) {
-	var libraries = AppController.sharedInstance().librariesController().libraries(),
-		libraryLoop = libraries.objectEnumerator(),
+	var libraryLoop = libraries.objectEnumerator(),
 		library,
 		libraryArray = ["Current Document"];
 
@@ -36,8 +38,7 @@ var instanceSheet = function(context) {
 			var librarySymbols = context.document.documentData().localSymbols(),
 				libraryID = context.document.documentData().objectID();
 		} else {
-			var libraries = AppController.sharedInstance().librariesController().libraries(),
-				library = libraries[symbolSource.indexOfSelectedItem()-1],
+			var library = libraries[symbolSource.indexOfSelectedItem()-1],
 				libraryPath = library.locationOnDisk().path(),
 				libraryFile = openFile(libraryPath),
 				librarySymbols = (libraryFile) ? libraryFile.documentData().allSymbols() : nil;
@@ -118,6 +119,8 @@ function createSelect(items,selectedItemIndex,frame) {
 
 	comboBox.addItemsWithObjectValues(items);
 	comboBox.selectItemAtIndex(selectedItemIndex);
+	comboBox.setNumberOfVisibleItems(16);
+	comboBox.setCompletes(1);
 
 	return comboBox;
 }

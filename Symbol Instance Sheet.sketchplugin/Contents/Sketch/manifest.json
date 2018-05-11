@@ -40,7 +40,7 @@
 		]
 	},
 	"identifier" : "com.sonburn.sketchplugins.symbol-instance-sheet",
-	"version" : "0.6",
+	"version" : "0.7",
 	"description" : "Generate a sheet of symbol instances from your current document or a library.",
 	"authorEmail" : "jason.burns@synchronoss.com",
 	"name" : "Symbol Instance Sheet",

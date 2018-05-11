@@ -6,15 +6,15 @@
 		<description>Generate a sheet of symbol instances from your current document or a library.</description>
 		<language>en</language>
 		<item>
-			<title>Version 0.6</title>
+			<title>Version 0.7</title>
 			<description>
 				<![CDATA[
 				<ul>
-				<li>Utilizing MSShareableObjectReference for importing in Sketch 50, reinstated old method for previous versions of Sketch.</li>
+				<li>Library list is now sorted alphabetically.</li>
 				</ul>
 				]]>
 			</description>
-			<enclosure url="https://github.com/sonburn/symbol-instance-sheet/archive/master.zip" sparkle:version="0.6" />
+			<enclosure url="https://github.com/sonburn/symbol-instance-sheet/archive/master.zip" sparkle:version="0.7" />
 		</item>
 	</channel>
 </rss>
