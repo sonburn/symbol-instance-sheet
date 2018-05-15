@@ -1,5 +1,5 @@
-var strPluginName = "Symbol Instance Sheet",
-	strPluginDomain = "com.sonburn.sketchplugins.symbol-instance-sheet",
+var pluginName = "Symbol Instance Sheet",
+	pluginDomain = "com.sonburn.sketchplugins.symbol-instance-sheet",
 	debugMode = false;
 
 var librarySort = NSSortDescriptor.sortDescriptorWithKey_ascending("name",1),
@@ -17,7 +17,7 @@ var instanceSheet = function(context) {
 	var alertWindow = COSAlertWindow.new();
 
 	alertWindow.setIcon(NSImage.alloc().initByReferencingFile(context.plugin.urlForResourceNamed("icon.png").path()));
-	alertWindow.setMessageText(strPluginName);
+	alertWindow.setMessageText(pluginName);
 
 	alertWindow.setInformativeText("Generate a sheet of symbol instances from your current document or a library.");
 
@@ -48,25 +48,24 @@ var instanceSheet = function(context) {
 		}
 
 		if (librarySymbols && librarySymbols.length) {
-			var predicate = NSPredicate.predicateWithFormat("userInfo != nil && function(userInfo,'valueForKeyPath:',%@).source == '" + libraryID + "'",strPluginDomain),
+			var predicate = NSPredicate.predicateWithFormat("userInfo != nil && function(userInfo,'valueForKeyPath:',%@).source == '" + libraryID + "'",pluginDomain),
 				page = context.document.documentData().pages().filteredArrayUsingPredicate(predicate).firstObject(),
 				pageName = (!library) ? "Current Document" : library.name();
 
 			context.document.removePage(page);
 
 			page = context.document.addBlankPage();
-			page.setName(strPluginName + " [" + pageName + "]");
+			page.setName(pluginName + " [" + pageName + "]");
 			page.setRulerBase(CGPointMake(0,0));
 
 			context.command.setValue_forKey_onLayer(libraryID,"source",page);
 
 			for (var i = 0; i < librarySymbols.length; i++) {
-				var symbol = importForeignSymbol(librarySymbols[i],library);
+				var symbolMaster = (symbolSource.indexOfSelectedItem() == 0) ? librarySymbols[i] : importForeignSymbol(librarySymbols[i],library).symbolMaster(),
+					symbolInstance = symbolMaster.newSymbolInstance();
 
-				symbolInstance = symbol.symbolMaster().newSymbolInstance();
-
-				symbolInstance.frame().setX(symbol.symbolMaster().frame().x());
-				symbolInstance.frame().setY(symbol.symbolMaster().frame().y());
+				symbolInstance.frame().setX(symbolMaster.frame().x());
+				symbolInstance.frame().setY(symbolMaster.frame().y());
 
 				page.insertLayer_atIndex(symbolInstance,nil);
 			}
@@ -75,7 +74,7 @@ var instanceSheet = function(context) {
 
 			if (!debugMode) googleAnalytics(context,"sheet","run");
 		} else {
-			displayDialog("There are no symbols in the selected library.",strPluginName)
+			displayDialog(pluginName,"There are no symbols in the selected library.")
 		}
 	} else return false;
 }
@@ -125,8 +124,14 @@ function createSelect(items,selectedItemIndex,frame) {
 	return comboBox;
 }
 
-function displayDialog(message,title) {
-	NSApplication.sharedApplication().displayDialog_withTitle(message,title);
+function displayDialog(title,body) {
+	if (MSApplicationMetadata.metadata().appVersion >= 50) {
+		const UI = require("sketch/ui");
+
+		UI.alert(title,body);
+	} else {
+		NSApplication.sharedApplication().displayDialog_withTitle(body,title);
+	}
 }
 
 function googleAnalytics(context,category,action,label,value) {
