@@ -39,6 +39,7 @@ To find your plugins directory...
 
 # Changelog
 
+* **1.0** - Added ability to create instance sheet for specific page in library, and for symbols which exist in document.
 * **0.8** - Fix for plugin failing when Current Document selected as source.
 * **0.7** - Library list is now sorted alphabetically.
 * **0.6** - Utilizing MSShareableObjectReference for importing in Sketch 50, reinstated old method for previous versions of Sketch.
@@ -58,4 +59,4 @@ If you find this plugin helpful, or would like to support my plugins in general,
 
 # License
 
-Copyright (c) 2018 Jason Burns (Sonburn). See LICENSE.md for further details.
+Copyright (c) 2019 Jason Burns (Sonburn). See LICENSE.md for further details.
