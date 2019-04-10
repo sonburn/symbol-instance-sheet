@@ -12,6 +12,7 @@
 			"name" : "Symbol Instance Sheet",
 			"shortcut" : "cmd option shift i",
 			"identifier" : "inventory",
+			"icon": "icon.png",
 			"description" : "Generate a sheet of symbol instances from your current document or a library.",
 			"script" : "script.js",
 			"handler" : "inventory"
@@ -19,18 +20,21 @@
 		{
 			"name": "Report Issue",
 			"identifier": "report",
+			"icon": "icon.png",
 			"script" : "script.js",
 			"handler": "report"
 		},
 		{
 			"name": "Other Plugins",
 			"identifier": "plugins",
+			"icon": "icon.png",
 			"script" : "script.js",
 			"handler": "plugins"
 		},
 		{
 			"name": "Donate",
 			"identifier": "donate",
+			"icon": "icon.png",
 			"script" : "script.js",
 			"handler": "donate"
 		}
