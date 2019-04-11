@@ -12,31 +12,34 @@
 			"name" : "Symbol Instance Sheet",
 			"shortcut" : "cmd option shift i",
 			"identifier" : "inventory",
-			"icon": "icon.png",
 			"description" : "Generate a sheet of symbol instances from your current document or a library.",
+			"icon" : "icon.png",
 			"script" : "script.js",
 			"handler" : "inventory"
 		},
 		{
-			"name": "Report Issue",
-			"identifier": "report",
-			"icon": "icon.png",
+			"name" : "Report Issue",
+			"identifier" : "report",
+			"description" : "Report an issue with Symbol Instance Sheet.",
+			"icon" : "icon.png",
 			"script" : "script.js",
-			"handler": "report"
+			"handler" : "report"
 		},
 		{
-			"name": "Other Plugins",
-			"identifier": "plugins",
-			"icon": "icon.png",
+			"name" : "Other Plugins",
+			"identifier" : "plugins",
+			"description" : "View all of Sonburn's plugins.",
+			"icon" : "icon.png",
 			"script" : "script.js",
-			"handler": "plugins"
+			"handler" : "plugins"
 		},
 		{
-			"name": "Donate",
-			"identifier": "donate",
-			"icon": "icon.png",
+			"name" : "Donate",
+			"identifier" : "donate",
+			"description" : "Donate to the development of Symbol Instance Sheet.",
+			"icon" : "icon.png",
 			"script" : "script.js",
-			"handler": "donate"
+			"handler" : "donate"
 		}
 	],
 	"menu" : {
